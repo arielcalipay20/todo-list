@@ -8,21 +8,34 @@ function Todo(props) {
     setTodo([...todo, name]);
   }
 
+  const deleteTodo = (index) => {
+    const updatedTodo = [...todo];
+    updatedTodo.splice(index, 1);
+    const confirmed = window.confirm('Are your sure you want to delete the ' + updatedTodo);
+    if (confirmed) {
+      setTodo(updatedTodo);
+    }
+  }
+
   return (
-    <>
-      <AddTodo handleSubmit={addTodo} />
-      <TodoList data={todo} />
-    </>
+    <div className='main-container'>
+      <div className='sub-container'>
+        <AddTodo handleSubmit={addTodo} />
+        <TodoList data={todo} handleDelete={deleteTodo} />
+      </div>
+    </div>
   );
 }
 
 function TodoList(props) {
   const arr = props.data
   const listItems = arr.map((val, index) => {
-    return <li key={index}>{val}</li>
+    return <p className='list-container' onClick={() => props.handleDelete(index)} key={index}>
+      {val}
+    </p>
   });
   return (
-    <ol>{listItems}</ol>
+    <div>{listItems}</div>
   );
 }
 
@@ -44,8 +57,8 @@ function AddTodo(props) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <input type='text' placeholder='add todo' value={addTodo} onChange={handleChange} />
-      <button type='submit'>add</button>
+      <input type='text' placeholder='Add Todo' value={addTodo} onChange={handleChange} />
+      <button type='submit'>Add</button>
     </form>
   );
 }
