@@ -1,6 +1,7 @@
 import './App.css';
 import { useState } from 'react';
 
+//Main Component and Functionality
 function Todo(props) {
   const [todo, setTodo] = useState(props.data);
 
@@ -11,7 +12,7 @@ function Todo(props) {
   const deleteTodo = (index) => {
     const updatedTodo = [...todo];
     updatedTodo.splice(index, 1);
-    const confirmed = window.confirm('Are your sure you want to delete the ' + updatedTodo);
+    const confirmed = window.confirm('Are your sure you want to delete the ' + todo[index]);
     if (confirmed) {
       setTodo(updatedTodo);
     }
@@ -27,6 +28,7 @@ function Todo(props) {
   );
 }
 
+//Component for displaying list
 function TodoList(props) {
   const arr = props.data
   const listItems = arr.map((val, index) => {
@@ -39,6 +41,8 @@ function TodoList(props) {
   );
 }
 
+
+//Component for UI
 function AddTodo(props) {
   const [addTodo, setAddTodo] = useState('');
 
@@ -57,7 +61,7 @@ function AddTodo(props) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <input type='text' placeholder='Add Todo' value={addTodo} onChange={handleChange} />
+      <input type='text' placeholder='Add Todo' value={addTodo} onChange={handleChange} required />
       <button type='submit'>Add</button>
     </form>
   );
